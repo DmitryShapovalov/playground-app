@@ -16,6 +16,7 @@ import UI
 extension MenuScreenViewController {
     public func assembleInterations(with topDisposer: CompositeDisposable = .init()) {
         self.magiColorScreen.assembleMainInteractions()
+        self.additionalScreen.assembleInteractions()
         
         let downloadInteractor = self.downloadScreen.assembleInteractions()
         
