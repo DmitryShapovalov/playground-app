@@ -22,6 +22,6 @@ extension MenuScreenViewController {
         
         downloadInteractor.onOpen.bind {
             self.selectedIndex = 1
-        }.disposed(by: topDisposer)
+        }.disposed(by: topDisposer) 
     }
 }

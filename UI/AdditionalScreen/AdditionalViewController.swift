@@ -31,13 +31,14 @@ public class AdditionalViewController: UIViewController {
         return mainView.seeYouButton.rx.controlEvent(.touchUpInside)
     }
     
-    public func changeScreenLabelWith(state: ChangeLableState?) {
-        guard let i = state else { return }
+    public func changeScreenLabelWith(state: ChangeLableState? ) {
+        guard let i = state, !skipSignal else { return }
         mainView.resultLabel.text = textList[i.rawValue]
     }
     
     let mainView = AdditionalScreenView()
     let disposeBag = DisposeBag()
+    public var skipSignal = false
 }
 
 extension AdditionalViewController {

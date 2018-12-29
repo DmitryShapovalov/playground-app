@@ -46,7 +46,6 @@ public class DownloadService {
 public class DownloadScreenInteractor {
     public let onOpen = PublishSubject<()>()
     
-    
 }
 
 extension DownloadScreenViewController {
