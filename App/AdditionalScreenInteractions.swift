@@ -16,14 +16,12 @@ extension AdditionalViewController {
     @discardableResult
     public func assembleInteractions(with topDisposer: CompositeDisposable = .init()) -> DownloadScreenInteractor {
         let interactor = DownloadScreenInteractor()
-    
-        rx.viewDidDisappear.subscribe({ [weak self] _ in
-            self?.changeScreenLabelWith(state: .left_without_saying_goodbye)
-        }).disposed(by: topDisposer)
         
-        rx.viewDidAppear.subscribe({ [weak self] _ in
-            self?.skipSignal = false
-            }).disposed(by: topDisposer)
+        let vc = self.parent as! UITabBarController
+        vc.rx.didSelect.subscribe({ [weak self] _ in
+            self?.changeScreenLabelWith(state: .left_without_saying_goodbye)
+            self?.skipSignal = true
+        }).disposed(by: topDisposer)
         
         self.onGoodByeClicked.bind { [weak self] in
             self?.changeScreenLabelWith(state: .good_bye)
@@ -35,17 +33,17 @@ extension AdditionalViewController {
             self?.onFirstTab()
             }.disposed(by: topDisposer)
 
-        UIApplication.shared.rx.applicationDidEnterBackground
-            .subscribe({ [weak self] _ in
-               self?.changeScreenLabelWith(state: .somewhere_here)
-            })
-            .disposed(by: topDisposer)
+       UIApplication.shared.rx.applicationDidEnterBackground
+        .subscribe({ [weak self] _ in
+            self?.changeScreenLabelWith(state: .somewhere_here)
+        })
+        .disposed(by: topDisposer)
         
         return interactor
     }
     
     private func onFirstTab() {
-        self.skipSignal = true
+        skipSignal = false
         let secondVC = tabBarController!
         secondVC.selectedIndex = 0
     }

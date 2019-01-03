@@ -32,7 +32,7 @@ public class AdditionalViewController: UIViewController {
     }
     
     public func changeScreenLabelWith(state: ChangeLableState? ) {
-        guard let i = state, !skipSignal else { return }
+        guard let i = state, skipSignal else { return }
         mainView.resultLabel.text = textList[i.rawValue]
     }
     
